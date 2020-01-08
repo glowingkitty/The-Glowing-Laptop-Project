@@ -3,14 +3,14 @@
 
 //#define STRIPTYPE NEOPIXEL
 
-const int stripSize = 30;
+const int stripSize = 21;
 const int hueStep = 8;
 const int segmentSize = 3;
 const int showFrom = 0;
 constexpr uint8_t stripPin = 3;
 
-const int LEDstripLEFT[] = {0, 30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16};
-const int LEDstripRIGHT[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+const int LEDstripLEFT[] = {2,3,4,5,6,7,8,9,10,11,12,13};
+const int LEDstripRIGHT[] = {0,1,2,21,20,19,18,17,16,15,14};
 
 CRGB LEDs[stripSize];
 int initialHue = 0;
@@ -39,7 +39,7 @@ void segmentShift()
 // show right and left a glowing ball moving up
 void right_and_left_transition()
 {
-  for (int i = 0; i < 15; i++)
+  for (int i = 0; i < 12; i++)
   {
     int left = LEDstripLEFT[i];
     int right = LEDstripRIGHT[i];
@@ -59,7 +59,7 @@ void color_shift_segments_right_and_left()
   for (int k = 0; k < 5; k++)
   {
     int hue = initialHue;
-    for (int i = 0; i < 15; i++, hue += hueStep)
+    for (int i = 0; i < 12; i++, hue += hueStep)
     {
       int left = LEDstripLEFT[i];
       int right = LEDstripRIGHT[i];
@@ -96,9 +96,23 @@ void color_shift_circle()
   segmentShift();
 }
 
+
+void testleds()
+{
+  for (int i = 0; i < stripSize; i++)
+    {
+        LEDs[i] = CHSV(255, 255, 255);
+        FastLED.show(100);
+        delay(100);
+    }
+
+  
+}
+
 void loop()
 {
   // right_and_left_transition();
   color_shift_segments_right_and_left();
+  // testleds();
   // color_shift_circle();
 }
